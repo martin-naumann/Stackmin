@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Stackmin</title>
+      <link rel="stylesheet" href="style.css"/>
+    </head>
+  <body ng-app="Cloudmin">
+    <form>
+      <fieldset ng-controller="ConnectionCtrl">
+        <legend>Management Server</legend>
+
+        <label for="url">API URL: </label>
+        <input id="url" ng-model="connectionSettings.url">
+
+        <label for="key">API Key: </label>
+        <input id="key" ng-model="connectionSettings.key">
+      
+        <label for="secret">API Secret: </label>
+        <input id="secret" ng-model="connectionSettings.secret">
+      
+        <button id="connect" ng-click="connect()">Connect</button>
+      </fieldset>
+    
+      <fieldset ng-controller="DeployCtrl">
+        <legend>Deploy an instance</legend>
+        <label for="templates">Template: </label>
+        <select id="templates" ng-model="template" ng-options="template.id as template.name for template in templates"></select>
+
+        <label for="zones">Zone: </label>
+        <select id="zones" ng-model="zone" ng-options="zone.id as zone.name for zone in zones"></select>
+
+        <label for="networks">Networks: </label>
+        <select id="networks" ng-model="network" ng-options="network.id as network.name for network in networks"></select>
+
+        <label for="services">Service: </label>
+        <select id="services" ng-model="service" ng-options="service.id as service.name for service in services"></select>
+<!--
+        <label for="ipaddress">IP:</label>
+        <input id="ipaddress" />
+-->         
+        <button id="deploy">Deploy</button>
+      </fieldset>
+    </form>
+    <h2>Running instances</h2>
+    <div ng-controller="InstanceCtrl">
+      <div id="vminfo"></div>
+      <ul id="vms">
+        <li ng-repeat="vm in instances">{{vm.displayname}}</li>
+      </ul>
+    </div>    
+    
+    <script src="lib/module.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="js/svc.js"></script>  
+    <script src="js/ctrl.js"></script>  
+  </body>
+</html>

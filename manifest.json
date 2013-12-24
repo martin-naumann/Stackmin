@@ -1,0 +1,12 @@
+{
+  "name": "Stackmin",
+  "description": "Simple Cloudstack Administration Interface",
+  "version": "0.1",
+  "manifest_version": 2,
+  "app": {
+    "background": {
+      "scripts": ["js/chrome_app.js"]
+    }
+  },
+  "permissions": [ "https://*/*", "storage" ]
+}
