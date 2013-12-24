@@ -40,5 +40,13 @@ function InstanceCtrl($scope, $rootScope, apiSvc) {
       $scope.instances = apiResult.virtualmachine;
     });
   });
-  
+
+  $scope.showVM = function(id) {
+    for(var i=0;i<$scope.instances.length;i++) {
+      if($scope.instances[i].id == id) {
+        $scope.vmInfo = $scope.instances[i];
+        break;
+      }
+    }
+  }
 }
