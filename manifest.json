@@ -8,5 +8,5 @@
       "scripts": ["js/chrome_app.js"]
     }
   },
-  "permissions": [ "https://*/*", "storage" ]
+  "permissions": [ "https://*/*", "storage", "notifications" ]
 }
