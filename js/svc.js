@@ -51,17 +51,53 @@ Cloudmin.factory("apiSvc", function($rootScope, $q) {
     });
     return async.promise;
   };
-    
+
   self.loadRunningInstances = function() {
     var async = $q.defer();
-    
+
     apiClient.exec("listVirtualMachines", {state: "Running"}, function(err, res) {
       $rootScope.$apply(function() {
         console.log(err, res);
         async.resolve(res);
       });
     });    
-      
+
+    return async.promise;
+  };
+
+  self.stopVm = function(id) {
+    var async = $q.defer();
+    apiClient.exec("stopVirtualMachine", {id: id}, function(err, res) {
+      console.log(err, res);
+      setTimeout(function queryJobState() {
+        apiClient.exec("queryAsyncJobResult", {jobid: res.jobid}, function(err, jobState) {
+          console.log(err, jobState);
+          if(jobState.jobstatus == 0) setTimeout(queryJobState, 1000);
+        });
+      }, 1000);
+    });
+    return async.promise;
+  };
+
+  self.destroyVm = function(id) {
+    var async = $q.defer();
+    apiClient.exec("destroyVirtualMachine", {id: id}, function(err, res) {
+      console.log(err, res);
+      if(err) return;
+      setTimeout(function queryJobState() {
+        apiClient.exec("queryAsyncJobResult", {jobid: res.jobid}, function(err, jobState) {
+          console.log(err, jobState);
+          if(jobState.jobstatus == 0) {
+            setTimeout(queryJobState, 1000);
+          } else {
+            $rootScope.$apply(function() {
+              if(jobState.jobresult.virtualmachine.state == "Destroyed") async.resolve();
+              else async.reject();
+            });
+          }
+        });
+      }, 1000);
+    });
     return async.promise;
   };
     
