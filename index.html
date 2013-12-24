@@ -43,9 +43,15 @@
     </form>
     <h2>Running instances</h2>
     <div ng-controller="InstanceCtrl">
-      <div id="vminfo"></div>
+      <div id="vminfo" ng-hide="!vmInfo">
+          <p>Name: {{vmInfo.displayname}} ({{vmInfo.instancename}})</p>
+          <p>IP: {{vmInfo.nic && vmInfo.nic[0] && vmInfo.nic[0].ipaddress}}</p>
+          <p>CPU: {{vmInfo.cpunumber}}x {{vmInfo.cpuspeed / 1000}} GHz</p>
+          <p>RAM: {{vmInfo.memory / 1024}} GB</p>
+          <p>Network I/O: {{(vmInfo.networkkbsread/1024.0).toFixed(2)}} MB in / {{(vmInfo.networkkbswrite / 1024.0).toFixed(2)}} MB out</p>
+      </div>
       <ul id="vms">
-        <li ng-repeat="vm in instances">{{vm.displayname}}</li>
+        <li ng-repeat="vm in instances" ng-click="showVM(vm.id)">{{vm.displayname || vm.instancename}}</li>
       </ul>
     </div>    
     
