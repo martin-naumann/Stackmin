@@ -51,13 +51,28 @@ function InstanceCtrl($scope, $rootScope, apiSvc, notificationSvc) {
     }
   };
 
+  $scope.startVm = function(id) {
+    apiSvc.startVm(id).then(function success() {
+      notificationSvc.notifySuccess("VM started", "VM " + id + " was successfully started!");
+    }, function failure() {
+      notificationSvc.notifyFailure("ERROR", "VM " + id + " couldn't be started!");
+    });
+  };
+
   $scope.stopVm = function(id) {
     apiSvc.stopVm(id).then(function success() {
       notificationSvc.notifySuccess("VM stopped", "VM " + id + " was successfully stopped!");
     }, function failure() {
       notificationSvc.notifyFailure("ERROR", "VM " + id + " couldn't be stopped!");
     });
+  };
 
+  $scope.rebootVm = function(id) {
+    apiSvc.startVm(id).then(function success() {
+      notificationSvc.notifySuccess("VM rebooted", "VM " + id + " was successfully rebooted!");
+    }, function failure() {
+      notificationSvc.notifyFailure("ERROR", "VM " + id + " couldn't be rebooted!");
+    });
   };
 
   $scope.deleteVm = function(id) {
