@@ -35,7 +35,7 @@ function DeployCtrl($scope, $rootScope, apiSvc) {
 
 function InstanceCtrl($scope, $rootScope, apiSvc, notificationSvc) {
   $rootScope.$on("connect", function() {
-    apiSvc.loadRunningInstances().then(function(apiResult) {
+    apiSvc.loadInstances().then(function(apiResult) {
       console.log(apiResult);
       $scope.instances = apiResult.virtualmachine;
     });

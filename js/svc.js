@@ -52,7 +52,7 @@ Cloudmin.factory("apiSvc", function($rootScope, $q) {
     return async.promise;
   };
 
-  self.loadRunningInstances = function() {
+  self.loadInstances = function() {
     var async = $q.defer();
 
     apiClient.exec("listVirtualMachines", {}, function(err, res) {
