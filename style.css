@@ -1,14 +1,21 @@
+html, body {
+  overflow: auto;
+}
+
 #vms {
   margin: 0;
   padding: 0;
-  box-sizing:border-box;
+  box-sizing: border-box;
   width: 49%;
 }
 
+.ng-hide { display: none; }
+
 #vminfo {
-  float: right;
+  position: fixed;
+  right: 0px;
   margin: 0;
   padding: 0;
-  box-sizing:border-box;
+  box-sizing: border-box;
   width: 49%;
 }
