@@ -65,6 +65,48 @@ Cloudmin.factory("apiSvc", function($rootScope, $q) {
     return async.promise;
   };
 
+  self.startVm = function(id) {
+    var async = $q.defer();
+    apiClient.exec("startVirtualMachine", {id: id}, function(err, res) {
+      console.log(err, res);
+      setTimeout(function queryJobState() {
+        apiClient.exec("queryAsyncJobResult", {jobid: res.jobid}, function(err, jobState) {
+          console.log(err, jobState);
+          if(jobState.jobstatus == 0) {
+            setTimeout(queryJobState, 1000);
+          } else {
+            $rootScope.$apply(function() {
+              if(jobState.jobresult.virtualmachine.state == "Running") async.resolve();
+              else async.reject();
+            });
+          }
+        });
+      }, 1000);
+    });
+    return async.promise;
+  };
+
+  self.rebootVm = function(id) {
+    var async = $q.defer();
+    apiClient.exec("rebootVirtualMachine", {id: id}, function(err, res) {
+      console.log(err, res);
+      setTimeout(function queryJobState() {
+        apiClient.exec("queryAsyncJobResult", {jobid: res.jobid}, function(err, jobState) {
+          console.log(err, jobState);
+          if(jobState.jobstatus == 0) {
+            setTimeout(queryJobState, 1000);
+          } else {
+            $rootScope.$apply(function() {
+              if(jobState.jobresult.virtualmachine.state == "Running") async.resolve();
+              else async.reject();
+            });
+          }
+        });
+      }, 1000);
+    });
+    return async.promise;
+  };
+
   self.stopVm = function(id) {
     var async = $q.defer();
     apiClient.exec("stopVirtualMachine", {id: id}, function(err, res) {
