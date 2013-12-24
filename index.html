@@ -50,7 +50,8 @@
           <p>RAM: {{vmInfo.memory / 1024}} GB</p>
           <p>Network I/O: {{(vmInfo.networkkbsread/1024.0).toFixed(2)}} MB in / {{(vmInfo.networkkbswrite / 1024.0).toFixed(2)}} MB out</p>
           <p>
-            <button ng-click="stopVm(vmInfo.id)">Stop</button>
+            <button ng-click="startVm(vmInfo.id)" ng-show="vmInfo.state == 'Stopped'">Start</button>
+            <button ng-click="stopVm(vmInfo.id)" ng-show="vmInfo.state == 'Running'">Stop</button>
             <button ng-click="rebootVm(vmInfo.id)">Reboot</button>
             <button ng-click="deleteVm(vmInfo.id)">Delete</button>
           </p>
