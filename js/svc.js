@@ -55,7 +55,7 @@ Cloudmin.factory("apiSvc", function($rootScope, $q) {
   self.loadRunningInstances = function() {
     var async = $q.defer();
 
-    apiClient.exec("listVirtualMachines", {}, function(err, res) {
+    apiClient.exec("listVirtualMachines", {state: "Running"}, function(err, res) {
       $rootScope.$apply(function() {
         console.log(err, res);
         async.resolve(res);
@@ -72,14 +72,7 @@ Cloudmin.factory("apiSvc", function($rootScope, $q) {
       setTimeout(function queryJobState() {
         apiClient.exec("queryAsyncJobResult", {jobid: res.jobid}, function(err, jobState) {
           console.log(err, jobState);
-          if(jobState.jobstatus == 0) {
-            setTimeout(queryJobState, 1000);
-          } else {
-            $rootScope.$apply(function() {
-              if(jobState.jobresult.virtualmachine.state == "Stopped") async.resolve();
-              else async.reject();
-            });
-          }
+          if(jobState.jobstatus == 0) setTimeout(queryJobState, 1000);
         });
       }, 1000);
     });

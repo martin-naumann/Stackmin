@@ -41,7 +41,7 @@
         <button id="deploy">Deploy</button>
       </fieldset>
     </form>
-    <h2>Virtual machines</h2>
+    <h2>Running instances</h2>
     <div ng-controller="InstanceCtrl">
       <div id="vminfo" ng-hide="!vmInfo">
           <p>Name: {{vmInfo.displayname}} ({{vmInfo.instancename}})</p>
@@ -56,7 +56,7 @@
           </p>
       </div>
       <ul id="vms">
-        <li ng-repeat="vm in instances" ng-click="showVm(vm.id)" ng-class="{stopped: vm.state == 'Stopped', running: vm.state == 'Running' }">{{vm.displayname || vm.instancename}}</li>
+        <li ng-repeat="vm in instances" ng-click="showVm(vm.id)">{{vm.displayname || vm.instancename}}</li>
       </ul>
     </div>    
     

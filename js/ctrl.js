@@ -33,7 +33,7 @@ function DeployCtrl($scope, $rootScope, apiSvc) {
   });
 }
 
-function InstanceCtrl($scope, $rootScope, apiSvc, notificationSvc) {
+function InstanceCtrl($scope, $rootScope, apiSvc) {
   $rootScope.$on("connect", function() {
     apiSvc.loadRunningInstances().then(function(apiResult) {
       console.log(apiResult);
@@ -41,30 +41,12 @@ function InstanceCtrl($scope, $rootScope, apiSvc, notificationSvc) {
     });
   });
 
-  $scope.showVm = function(id) {
-    console.log(id);
+  $scope.showVM = function(id) {
     for(var i=0;i<$scope.instances.length;i++) {
       if($scope.instances[i].id == id) {
         $scope.vmInfo = $scope.instances[i];
         break;
       }
     }
-  };
-
-  $scope.stopVm = function(id) {
-    apiSvc.stopVm(id).then(function success() {
-      notificationSvc.notifySuccess("VM stopped", "VM " + id + " was successfully stopped!");
-    }, function failure() {
-      notificationSvc.notifyFailure("ERROR", "VM " + id + " couldn't be stopped!");
-    });
-
-  };
-
-  $scope.deleteVm = function(id) {
-    apiSvc.destroyVm(id).then(function success() {
-      notificationSvc.notifySuccess("VM deleted", "VM " + id + " was successfully deleted!");
-    }, function failure() {
-      notificationSvc.notifyFailure("ERROR", "VM " + id + " couldn't be deleted!");
-    });
-  };
+  }
 }
