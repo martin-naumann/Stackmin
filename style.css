@@ -11,6 +11,9 @@ html, body {
 
 .ng-hide { display: none; }
 
+.running { color: #6a6; }
+.stopped { color: #a66; }
+
 #vminfo {
   position: fixed;
   right: 0px;
