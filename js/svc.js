@@ -111,6 +111,20 @@ Cloudmin.factory("apiSvc", function($rootScope, $q) {
   return self;
 });
 
+Cloudmin.factory("notificationSvc", function() {
+  var self = {};
+
+  self.notifySuccess = function(title, msg) {
+    chrome.notifications.create("", {type: "basic", title: "Yeha! " + title, message: msg, iconUrl: "icons/success.png"}, function() {});
+  };
+
+  self.notifyFailure = function(title, msg) {
+    chrome.notifications.create("", {type: "basic", title: "Oh noes! " + title, message: msg, iconUrl: "icons/error.png"}, function() {});
+  };
+
+  return self;
+});
+
 Cloudmin.factory("settingsSvc", function($q, $rootScope) {
   var self = {};
 
