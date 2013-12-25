@@ -38,7 +38,7 @@
         <label for="ipaddress">IP:</label>
         <input id="ipaddress" />
 -->         
-        <button id="deploy">Deploy</button>
+        <button id="deploy" ng-click="createVm()" ng-disabled="deploying">Deploy</button>
       </fieldset>
     </form>
     <h2>Virtual machines</h2>
