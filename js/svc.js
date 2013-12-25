@@ -65,9 +65,10 @@ Cloudmin.factory("apiSvc", function($rootScope, $q) {
     return async.promise;
   };
 
-  var performAction = function(action, id, expectedTargetState) {
+  var performAction = function(action, params, expectedTargetState) {
     var async = $q.defer();
-    apiClient.exec(action + "VirtualMachine", {id: id}, function(err, res) {
+
+    apiClient.exec(action + "VirtualMachine", params, function(err, res) {
       console.log(err, res);
       setTimeout(function queryJobState() {
         apiClient.exec("queryAsyncJobResult", {jobid: res.jobid}, function(err, jobState) {
@@ -87,19 +88,19 @@ Cloudmin.factory("apiSvc", function($rootScope, $q) {
   };
 
   self.startVm = function(id) {
-    return performAction("start", id, "Running");
+    return performAction("start", {id: id}, "Running");
   };
 
   self.rebootVm = function(id) {
-    return performAction("reboot", id, "Running");
+    return performAction("reboot", {id: id}, "Running");
   };
 
   self.stopVm = function(id) {
-    return performAction("stop", id, "Stopped");
+    return performAction("stop", {id: id}, "Stopped");
   };
 
   self.destroyVm = function(id) {
-    return performAction("destroy", id, "Destroyed");
+    return performAction("destroy", {id: id}, "Destroyed");
   };
     
   self.connect = function(url, key, secret) {
