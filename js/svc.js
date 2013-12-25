@@ -4,52 +4,31 @@ Cloudmin.factory("apiSvc", function($rootScope, $q) {
   var self = {};
   var apiClient = null;
 
-  //TODO refactor this into a generic load<stuff> function wrapper    
+  var loadOptionsFromApi = function(whatToList, params) {
+    var async = $q.defer();
+    apiClient.exec("list" + whatToList, params || {}, function(err, res) {
+      $rootScope.$apply(function() {
+        console.log(err, res);
+        async.resolve(res[whatToList.slice(0, -1).toLowerCase()]);
+      });
+    });
+    return async.promise;
+  }
+
   self.loadTemplates = function() {
-    var async = $q.defer();
-    apiClient.exec("listTemplates", {templatefilter: "executable"}, function(err, res) {
-      $rootScope.$apply(function() {
-        console.log(err, res);
-        async.resolve(res.template);
-      });
-    });
-    return async.promise;
+    return loadOptionsFromApi("Templates", {templatefilter: "executable"});
   };
 
-  //TODO refactor this into a generic load<stuff> function wrapper
   self.loadZones = function() {
-    var async = $q.defer();
-    apiClient.exec("listZones", {}, function(err, res) {
-      $rootScope.$apply(function() {
-        console.log(err, res);
-        async.resolve(res.zone);
-      });
-    });
-    return async.promise;
+    return loadOptionsFromApi("Zones");
   };
 
-  //TODO refactor this into a generic load<stuff> function wrapper
   self.loadServices = function() {
-    var async = $q.defer();
-    apiClient.exec("listServiceOfferings", {}, function(err, res) {
-      $rootScope.$apply(function() {
-        console.log(err, res);
-        async.resolve(res.serviceoffering);
-      });
-    });
-    return async.promise;
+    return loadOptionsFromApi("ServiceOfferings");
   };
 
-  //TODO refactor this into a generic load<stuff> function wrapper
   self.loadNetworks = function() {
-    var async = $q.defer();
-    apiClient.exec("listNetworks", {}, function(err, res) {
-      $rootScope.$apply(function() {
-        console.log(err, res);
-        async.resolve(res.network);
-      });
-    });
-    return async.promise;
+    return loadOptionsFromApi("Networks");
   };
 
   self.loadInstances = function() {
