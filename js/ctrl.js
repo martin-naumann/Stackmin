@@ -34,11 +34,11 @@ function DeployCtrl($scope, $rootScope, apiSvc, notificationSvc) {
 
   $scope.createVm = function() {
     $scope.deploying = true;
-    apiSvc.createVm($scope.service, $scope.template, $scope.zone, $scope.network).then(function success() {
-      notificationSvc.notifySuccess("VM started", "VM " + id + " was successfully started!");
+    apiSvc.createVm($scope.service, $scope.template, $scope.zone, $scope.network, $scope.name, $scope.ipaddress).then(function success() {
+      notificationSvc.notifySuccess("VM started", "VM was successfully created!");
       $scope.deploying = false;
     }, function failure() {
-      notificationSvc.notifyFailure("ERROR", "VM " + id + " couldn't be started!");
+      notificationSvc.notifyFailure("ERROR", "VM couldn't be created!");
       $scope.deploying = false;
     });
   }
