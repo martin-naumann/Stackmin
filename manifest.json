@@ -8,5 +8,9 @@
       "scripts": ["js/chrome_app.js"]
     }
   },
+  "icons": {
+    "64": "icons/icon_64.png",
+    "48": "icons/icon_48.png"
+  },
   "permissions": [ "https://*/*", "storage", "notifications" ]
 }
