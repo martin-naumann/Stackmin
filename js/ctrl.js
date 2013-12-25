@@ -11,7 +11,7 @@ function ConnectionCtrl($scope, $rootScope, apiSvc, settingsSvc) {
   };
 }
 
-function DeployCtrl($scope, $rootScope, apiSvc) {
+function DeployCtrl($scope, $rootScope, apiSvc, notificationSvc) {
   $rootScope.$on("connect", function() {
     apiSvc.loadTemplates().then(function(templates) {
       console.log("Templates", templates);
@@ -31,6 +31,17 @@ function DeployCtrl($scope, $rootScope, apiSvc) {
     });
       
   });
+
+  $scope.createVm = function() {
+    $scope.deploying = true;
+    apiSvc.createVm($scope.service, $scope.template, $scope.zone, $scope.network).then(function success() {
+      notificationSvc.notifySuccess("VM started", "VM " + id + " was successfully started!");
+      $scope.deploying = false;
+    }, function failure() {
+      notificationSvc.notifyFailure("ERROR", "VM " + id + " couldn't be started!");
+      $scope.deploying = false;
+    });
+  }
 }
 
 function InstanceCtrl($scope, $rootScope, apiSvc, notificationSvc) {
