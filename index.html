@@ -38,10 +38,10 @@
         <br />
 
         <label for="name">Name</label>
-        <input id="name">
+        <input id="name" ng-model="name">
 
         <label for="ipaddress">IP:</label>
-        <input id="ipaddress" />
+        <input id="ipaddress" ng-model="ipaddress" />
 
         <button id="deploy" ng-click="createVm()" ng-disabled="deploying">Deploy</button>
       </fieldset>
