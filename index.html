@@ -45,7 +45,11 @@
     <div ng-controller="InstanceCtrl">
       <div id="vminfo" ng-hide="!vmInfo">
           <p>Name: {{vmInfo.displayname}} ({{vmInfo.instancename}})</p>
-          <p>IP: {{vmInfo.nic && vmInfo.nic[0] && vmInfo.nic[0].ipaddress}}</p>
+          <div>Networks:
+              <ul>
+                  <li ng-repeat="net in vmInfo.nic">{{net.ipaddress}} ({{net.networkname}})</li>
+              </ul>
+          </div>
           <p>CPU: {{vmInfo.cpunumber}}x {{vmInfo.cpuspeed / 1000}} GHz</p>
           <p>RAM: {{vmInfo.memory / 1024}} GB</p>
           <p>Network I/O: {{(vmInfo.networkkbsread/1024.0).toFixed(2)}} MB in / {{(vmInfo.networkkbswrite / 1024.0).toFixed(2)}} MB out</p>
