@@ -87,6 +87,15 @@ Cloudmin.factory("apiSvc", function($rootScope, $q) {
     return async.promise;    
   };
 
+  self.createVm = function(service, template, zone, network) {
+    return performAction("deploy", {
+      serviceofferingid: service,
+      templateid: template,
+      zoneid: zone,
+      networkids: [network]
+    }, "Running");
+  };
+
   self.startVm = function(id) {
     return performAction("start", {id: id}, "Running");
   };
