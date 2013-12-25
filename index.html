@@ -50,11 +50,12 @@
           <p>RAM: {{vmInfo.memory / 1024}} GB</p>
           <p>Network I/O: {{(vmInfo.networkkbsread/1024.0).toFixed(2)}} MB in / {{(vmInfo.networkkbswrite / 1024.0).toFixed(2)}} MB out</p>
           <p>
-            <button ng-click="startVm(vmInfo.id)" ng-show="vmInfo.state == 'Stopped'">Start</button>
-            <button ng-click="stopVm(vmInfo.id)" ng-show="vmInfo.state == 'Running'">Stop</button>
-            <button ng-click="rebootVm(vmInfo.id)">Reboot</button>
-            <button ng-click="deleteVm(vmInfo.id)">Delete</button>
+            <button ng-click="startVm(vmInfo.id)" ng-show="vmInfo.state == 'Stopped'" ng-disabled="msg != ''">Start</button>
+            <button ng-click="stopVm(vmInfo.id)" ng-show="vmInfo.state == 'Running'" ng-disabled="msg != ''">Stop</button>
+            <button ng-click="rebootVm(vmInfo.id)" ng-disabled="msg != ''">Reboot</button>
+            <button ng-click="deleteVm(vmInfo.id)" ng-disabled="msg != ''">Delete</button>
           </p>
+          <p>{{msg}}</p>
       </div>
       <ul id="vms">
         <li ng-repeat="vm in instances" ng-click="showVm(vm.id)" ng-class="{stopped: vm.state == 'Stopped', running: vm.state == 'Running' }">{{vm.displayname || vm.instancename}}</li>

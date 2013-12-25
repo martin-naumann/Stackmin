@@ -34,11 +34,17 @@ function DeployCtrl($scope, $rootScope, apiSvc) {
 }
 
 function InstanceCtrl($scope, $rootScope, apiSvc, notificationSvc) {
-  $rootScope.$on("connect", function() {
+  $scope.msg = "";
+
+  var refreshInstanceList = function() {
     apiSvc.loadInstances().then(function(apiResult) {
       console.log(apiResult);
       $scope.instances = apiResult.virtualmachine;
     });
+  };
+
+  $rootScope.$on("connect", function() {
+    refreshInstanceList();
   });
 
   $scope.showVm = function(id) {
@@ -52,34 +58,50 @@ function InstanceCtrl($scope, $rootScope, apiSvc, notificationSvc) {
   };
 
   $scope.startVm = function(id) {
+    $scope.msg = "Starting VM...";
     apiSvc.startVm(id).then(function success() {
       notificationSvc.notifySuccess("VM started", "VM " + id + " was successfully started!");
+      $scope.msg = "";
+      refreshInstanceList();
     }, function failure() {
       notificationSvc.notifyFailure("ERROR", "VM " + id + " couldn't be started!");
+      $scope.msg = "";
     });
   };
 
   $scope.stopVm = function(id) {
+    $scope.msg = "Stopping VM...";
     apiSvc.stopVm(id).then(function success() {
       notificationSvc.notifySuccess("VM stopped", "VM " + id + " was successfully stopped!");
+      $scope.msg = "";
+      refreshInstanceList();
     }, function failure() {
       notificationSvc.notifyFailure("ERROR", "VM " + id + " couldn't be stopped!");
+      $scope.msg = "";
     });
   };
 
   $scope.rebootVm = function(id) {
+    $scope.msg = "Rebooting VM...";
     apiSvc.startVm(id).then(function success() {
       notificationSvc.notifySuccess("VM rebooted", "VM " + id + " was successfully rebooted!");
+      $scope.msg = "";
+      refreshInstanceList();
     }, function failure() {
       notificationSvc.notifyFailure("ERROR", "VM " + id + " couldn't be rebooted!");
+      $scope.msg = "";
     });
   };
 
   $scope.deleteVm = function(id) {
+    $scope.msg = "Deleting VM...";
     apiSvc.destroyVm(id).then(function success() {
       notificationSvc.notifySuccess("VM deleted", "VM " + id + " was successfully deleted!");
+      $scope.msg = "";
+      refreshInstanceList();
     }, function failure() {
       notificationSvc.notifyFailure("ERROR", "VM " + id + " couldn't be deleted!");
+      $scope.msg = "";
     });
   };
 }
