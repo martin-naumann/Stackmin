@@ -23,21 +23,26 @@
     
       <fieldset ng-controller="DeployCtrl">
         <legend>Deploy an instance</legend>
-        <label for="templates">Template: </label>
+        <label for="templates">Template*: </label>
         <select id="templates" ng-model="template" ng-options="template.id as template.name for template in templates"></select>
 
-        <label for="zones">Zone: </label>
+        <label for="zones">Zone*: </label>
         <select id="zones" ng-model="zone" ng-options="zone.id as zone.name for zone in zones"></select>
 
-        <label for="networks">Networks: </label>
+        <label for="networks">Networks*: </label>
         <select id="networks" ng-model="network" ng-options="network.id as network.name for network in networks"></select>
 
-        <label for="services">Service: </label>
+        <label for="services">Service*: </label>
         <select id="services" ng-model="service" ng-options="service.id as service.name for service in services"></select>
-<!--
+
+        <br />
+
+        <label for="name">Name</label>
+        <input id="name">
+
         <label for="ipaddress">IP:</label>
         <input id="ipaddress" />
--->         
+
         <button id="deploy" ng-click="createVm()" ng-disabled="deploying">Deploy</button>
       </fieldset>
     </form>
